@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en" style="background-color: rgb(7, 40, 7);">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>School Toolkit</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="todo.css">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Rubik:wght@700;900&display=swap" rel="stylesheet">
+</head>
+<div class="background-image" id="background-img"></div>
+<body>
+    <header class="toolbar glass">
+        <div class="toolbar-end">
+            <button class="toolbar-btn" id="calc"><i class="fa-solid fa-calculator"></i></button>
+            <div class="timer-section">
+                <button class="toolbar-btn" id="timer"><i class="fa-solid fa-clock"></i></button>
+                <span>25:00 Remaining</span>
+            </div>
+        </div>
+        <div class="toolbar-end">
+            <button class="toolbar-btn"><i class="fa-solid fa-gear"></i></button>
+        </div>
+    </header>
+    <main>
+        <div class="left-col">
+            <div class="card glass">
+                <h1>To-do</h1>
+                <div class="stats-section">
+                    <div class="progress-bar-container">
+                        <span>Total Progress:</span>
+                        <div class="progress-bar">
+                            <div id="progressBarFill" class="progress-bar-fill"></div>
+                        </div>
+                        <span id="progressPercent">0%</span>
+                    </div>
+                </div>
+                <div class="todo-add-box">
+                    <input type="text" class="text-box" placeholder="Add a Task Here..." id="task-input">
+                    <button class="search-filter-toggle" id="s-f-toggle"><i class="fa-solid fa-search"></i><i class="fa-solid fa-filter"></i></button>
+                </div>
+                <div class="sort-search" id="s-f-section">
+                    <div class="filter-section">
+                        <input type="text" id="search-input" placeholder="Search tasks or categories...">
+                    </div>
+                    <div class="sort-section">
+                        <label for="sort-select">Sort By:</label>
+                        <select id="sort-select">
+                            <option value="default">Default (Priority & Date)</option>
+                            <option value="dateOnly">Due Date Only</option>
+                            <option value="category">Category, Priority & Date</option>
+                        </select>
+                    </div>
+                </div>
+                <div id="listToDo" class="task-list">
+                    <!-- To-Do's will be injected here by js -->
+                </div>
+                <div class="section-header" id="completed-header">
+                    <h3>Completed</h3>
+                    <span id="completed-count">0</span>
+                    <button id="toggle-completed" class="toggle-btn" type="button" style="color: #181818">^</button>
+                </div>
+                <div id="listToDoCompleted" class="task-list">
+                    <!-- Tasks injected here -->
+                </div>
+            </div>
+        </div>
+        <div class="gap"></div>
+        <div class="right-col">
+            <div class="card glass">
+                <h1>Goals</h1>
+                <div>
+                    <input type="text" class="text-box" placeholder="Add a Goal for today, eg, Complete 3 assignemets...">
+                </div>
+                <div>
+                    <div id="goals">
+
+                    </div>
+                </div>
+            </div>
+            <div class="card glass">
+                <h1>Notes</h1>
+                <div>
+                    <textarea class="text-box" name="content" rows="4" placeholder="Add a Note.."></textarea>
+                </div>
+                <div>
+                    <div id="goals">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </main>
+    <div id="calc-modal" style="display: none;" class="modal-card">
+        <div class="modal-title-drag">
+            <h3>Calculator</h3>
+            <button class="drag-handle">⠿</button>
+        </div>
+        <div id="calculator">
+            <input id="display" readonly>
+            <div id="keys">
+                <button onclick="appendToDisplay('+')" class="operator-btn">+</button>
+                <button onclick="appendToDisplay('7')">7</button>
+                <button onclick="appendToDisplay('8')">8</button>
+                <button onclick="appendToDisplay('9')">9</button>
+                <button onclick="appendToDisplay('-')" class="operator-btn">-</button>
+                <button onclick="appendToDisplay('4')">4</button>
+                <button onclick="appendToDisplay('5')">5</button>
+                <button onclick="appendToDisplay('6')">6</button>
+                <button onclick="appendToDisplay('*')" class="operator-btn">*</button>
+                <button onclick="appendToDisplay('1')">1</button>
+                <button onclick="appendToDisplay('2')">2</button>
+                <button onclick="appendToDisplay('3')">3</button>
+                <button onclick="appendToDisplay('/')" class="operator-btn">/</button>
+                <button onclick="appendToDisplay('0')">0</button>
+                <button onclick="appendToDisplay('.')">.</button>
+                <button onclick="calculate()">=</button>
+                <button onclick="clearDisplay()" class="operator-btn">C</button>
+            </div>
+        </div>
+    </div>
+    <div id="timer-modal" style="display: none;" class="modal-card">
+        <button class="drag-handle">⠿</button>
+        This is a timer
+    </div>
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2 class="modal-title">Edit Task Details:</h2>
+            <label for="edit-task-text">Edit Task:</label>
+            <input type="text" id="edit-task-text" placeholder="Task description">
+            <label for="edit-task-priority">Priority:</label>
+
+            <select id="edit-task-priority">
+                <option value="minimal">Minimal</option>
+                <option value="normal">Normal</option>
+                <option value="critical">Critical</option>
+            </select>
+
+            <label for="edit-task-category">Category:</label>
+
+            <input id="edit-task-category">
+
+            <label for="edit-task-dueDate">Due Date:</label>
+            <input type="date" id="edit-task-dueDate">
+            <button id="save-edit-btn" class="action-btn">Save Changes</button>
+        </div>
+    </div>   
+    <script src="scripts/localfoarge.js"></script>
+    <script src="/scripts/calculator.js"></script>
+    <script src="scripts/script.js"></script>
+    <script src="scripts/todo.js"></script>
+    <script src="https://kit.fontawesome.com/de554a4fd4.js" crossorigin="anonymous"></script>
+    <script>
+        const sfToggleBtn = document.getElementById('s-f-toggle');
+        const sfSection = document.getElementById('s-f-section');
+
+        sfSection.style.display = 'none';
+
+        sfToggleBtn.addEventListener('click', () => {
+        if (sfSection.style.display === 'none') {
+            sfSection.style.display = 'flex';
+        } else {
+            sfSection.style.display = 'none';
+        }
+        });
+
+    </script>
+</body>
+</html>

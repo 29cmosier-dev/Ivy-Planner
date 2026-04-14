@@ -1,0 +1,355 @@
+/* --- 1. Variables & Global Resets --- */
+:root {
+    --priority-minimal: #054705;
+    --priority-normal: rgb(21, 7, 93);
+    --priority-critical: #e74c3c;
+    --clickup-purple: #7b68ee;
+    --bg-dark: #414141;
+    --container-bg: #181818;
+    --item-bg: #292929;
+    --text-main: #f3f3f3;
+}
+
+/* --- 3. Dashboard & Header Components --- */
+.header-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#welcomeMessage {
+    color: #dadada;
+    font-size: 16px;
+}
+
+/* Progress Bar */
+.progress-bar-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    color: #FFFFFF;
+}
+
+.progress-bar {
+    flex-grow: 1;
+    height: 10px;
+    background-color: #666666;
+    border-radius: 5px;
+    overflow: hidden;
+    max-width: 800px;
+}
+
+.progress-bar-fill {
+    height: 100%;
+    width: 0%;
+    background-color: #054705;
+    transition: width 0.4s ease-in-out;
+}
+
+/* --- 4. Inputs & Buttons --- */
+
+.task-list {
+    margin-top: 10px;
+}
+
+button {
+    background: transparent;
+    border: 0;
+    text-align: left;
+    cursor: pointer; /* Global cursor fix */
+}
+
+/* --- 5. Task Items & List Styling --- */
+.task-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 15px;
+    background: var(--item-bg);
+    margin-bottom: 8px;
+    border-radius: 20px;
+    transition: background 0.2s;
+    height: 2.3rem;
+}
+
+.task-item:hover {
+    background: #818181;
+}
+
+.task-item.completed-task {
+    text-decoration: line-through;
+    color: #adb5b6;
+    background: #35353563;
+}
+
+/* Container for the Title, Counter, and Arrow */
+.section-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 25px;
+    border-bottom: 2px solid #ecf0f1;
+    padding-bottom: 5px;
+    cursor: pointer; /* Makes the whole header clickable */
+}
+
+.section-header h3 { margin: 0; border: none; padding: 0; }
+
+/* The Counter Pill */
+#completed-count {
+    background: #444;
+    color: #fff;
+    font-size: 12px;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-weight: bold;
+}
+
+/* Smooth Slide Container */
+#listToDoCompleted {
+    overflow: hidden;
+    transition: max-height 1s cubic-bezier(0, 1, 0, 1); /* Quick expand, smooth collapse */
+    max-height: 2000px; /* Large enough for many tasks */
+}
+
+/* When Hidden */
+#listToDoCompleted.hidden {
+    max-height: 0;
+    transition: max-height 0.5s ease-out;
+}
+
+
+.task-details {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex-grow: 1;
+}
+
+.task-text {
+    flex-grow: 1; /* This tells the text to take up all available center space */
+    /* Remove max-width: 40% entirely */
+    margin-right: 20px;
+    color: #ffffff;
+    text-decoration: underline;
+    
+    /* These three lines work together to add '...' if the title hits the date */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis; 
+    
+    text-align: left;
+}
+
+/* Tags & Badges */
+.priority-tag, .category-tag {
+    font-size: 12px;
+    padding: 3px 8px;
+    border-radius: 12px;
+    color: white;
+    font-weight: bold;
+    text-transform: capitalize;
+    text-align: center;
+}
+
+.priority-tag { width: 4rem; }
+.category-tag { 
+    background-color: #aeb0b1; 
+    color: #000; 
+    width: 10rem; 
+}
+
+.priority-minimal { background-color: var(--priority-minimal); }
+.priority-normal { background-color: var(--priority-normal); }
+.priority-critical { background-color: var(--priority-critical); }
+
+/* 1. The Pulse Animation */
+@keyframes criticalPulse {
+    0% { box-shadow: inset 0 0 5px rgba(231, 76, 60, 0.4); }
+    50% { box-shadow: inset 0 0 15px rgba(231, 76, 60, 0.8); }
+    100% { box-shadow: inset 0 0 5px rgba(231, 76, 60, 0.4); }
+}
+
+/* 2. ONLY Critical & NOT Completed */
+.task-item.priority-critical:not(.completed-task) {
+    border: 1px solid #e74c3c !important;
+    background: #2d1a1a !important; /* Dark Red background */
+    animation: criticalPulse 2s infinite ease-in-out !important;
+}
+
+/* 3. Normal & Minimal (Keeping them original) */
+.task-item.priority-normal:not(.completed-task) {
+    border: 1px solid var(--priority-normal);
+    background: #292929; /* Back to your standard dark gray */
+}
+
+.task-item.priority-minimal:not(.completed-task) {
+    border: 1px solid var(--priority-minimal);
+    background: #292929;
+}
+
+/* 4. Completed Tasks (Override everything to Gray) */
+.task-item.completed-task {
+    background: #35353563 !important;
+    border: none !important;
+    animation: none !important;
+    box-shadow: none !important;
+}
+
+
+.due-date {
+    font-size: 12px;
+    color: #d8dbdb;
+    margin-right: 5px;
+}
+
+/* Action Buttons */
+.task-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.action-btn {
+    color: white;
+    padding: 6px;
+    border-radius: 3px;
+    font-size: 13px;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    transition: opacity 0.2s;
+}
+
+.action-btn:hover { opacity: 0.8; }
+.action-btn.delete-btn { background-color: #AA0000; }
+.action-btn.edit-btn { background-color: #646464; }
+
+/* --- 6. Modal System --- */
+.modal {
+    position: fixed;
+    z-index: 10;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal.hidden { display: none !important; }
+
+.modal-content {
+    background-color: #fefefe;
+    padding: 30px;
+    border-radius: 8px;
+    width: 80%;
+    max-width: 500px;
+    position: relative;
+    color: #000;
+}
+
+.modal-title { color: #000; margin-bottom: 20px; }
+
+.close-btn {
+    color: #aaa;
+    position: absolute;
+    right: 15px;
+    top: 10px;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.modal-content input, 
+.modal-content select {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 15px;
+    margin-top: 5px;
+    display: block;
+    box-sizing: border-box;
+}
+
+#save-edit-btn {
+    width: 100%;
+    padding: 10px;
+    background-color: var(--clickup-purple);
+    color: white;
+    text-align: center;
+}
+
+/* Filter Dropdown and Search */
+
+.sort-serarch {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px; 
+}
+
+.sort-serarch .filter-section, 
+.sort-serarch .sort-section {
+    margin: 0;
+}
+
+.sort-section {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #f3f3f3;
+}
+
+#sort-select {
+    padding: 5px 10px;
+    border-radius: 4px;
+    background-color: #292929;
+    color: white;
+    border: 1px solid #444;
+}
+
+#search-input {
+    padding: 5px 10px;
+    font-size: 14px;
+    border: 1px solid #444;
+    border-radius: 4px;
+    background-color: #292929;
+    color: white;
+    width: 15rem;
+    box-sizing: border-box;
+}
+
+#search-input:focus {
+    border-color: var(--clickup-purple);
+    outline: none;
+}
+
+.todo-add-box {
+    display: flex;
+    flex-direction: row;
+    height: 2.5rem;
+}
+
+.search-filter-toggle {
+    display: flex;
+    flex-direction: row;
+    font-size: 1rem;
+    width: 5rem;
+    justify-content: space-between;
+    align-items: center;
+    color: whitesmoke
+}
+
+.search-filter-toggle:active {
+    scale: 0.95;
+}
+  
+.sort-search {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin: 10px;
+}
