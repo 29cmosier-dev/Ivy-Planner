@@ -23,7 +23,6 @@ function toggleModal(modal, event) {
         modal.style.display = "block";
         modal.style.left = `${event.clientX}px`;
         modal.style.top = `${event.clientY}px`;
-        savePosition(modal.id, event.clientX + 'px', event.clientY + 'px');
     }
 }
 
@@ -63,31 +62,153 @@ document.addEventListener("mouseup", () => {
     }
 });
 
-const overlay = document.getElementById('breathe-overlay');
-const circle = document.getElementById('breathe-circle');
-const label = document.getElementById('breathe-text');
-let breatheInterval;
 
-function openBreathe() {
-    overlay.style.display = 'flex';
-    label.innerText = "Get Ready!";
-    setTimeout(() => {
-        runCycle();
-        breatheInterval = setInterval(runCycle, 4000);
-        }, 1000);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+let timeTotal = 1500; // The "Full" time for the current mode
+let timeLeft = 1500; 
+let timerInterval = null;
+let isBreakMode = false;
+const FULL_DASH_ARRAY = 283;
+
+// Elements
+const modalLabel = document.getElementById('timer-label');
+const toolbarText = document.getElementById('toolbar-timer-text');
+const pathRemaining = document.getElementById('timer-path-remaining');
+const sessionSlider = document.getElementById('session-slider');
+const breakSlider = document.getElementById('break-slider');
+const startBtn = document.getElementById('start-btn');
+const totalDisplay = document.getElementById('total-time');
+const breaks = document.getElementById('breaks');
+const time = document.getElementById('time');
+
+function updateDisplay() {
+    let mins = Math.floor(timeLeft / 60);
+    let secs = timeLeft % 60;
+    let formattedTime = `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+
+    modalLabel.innerText = formattedTime;
+    
+    // Toggle label based on mode
+    toolbarText.innerText = isBreakMode ? `${formattedTime} Break` : `${formattedTime} Remaining`;
+
+    // Ring Math
+    const timeFraction = timeLeft / timeTotal;
+    const dashoffset = (FULL_DASH_ARRAY * (1 - timeFraction));
+
+    pathRemaining.style.strokeDashoffset = dashoffset;
 }
 
-function runCycle() {
-    if (circle.style.transform === 'scale(2.5)') {
-        circle.style.transform = 'scale(1)';
-        label.innerText = "Exhale...";
+
+// Slider Logic
+// Add these listeners to your existing script
+sessionSlider.oninput = () => {
+    const val = parseInt(sessionSlider.value);
+    // Only update the live timer if we are NOT in break mode
+    if (!isBreakMode) {
+        timeTotal = val * 60;
+        timeLeft = timeTotal;
+        updateDisplay();
+    }
+};
+
+breakSlider.oninput = () => {
+    const val = parseInt(breakSlider.value);
+    // Only update the live timer if we ARE in break mode (like in your image)
+    if (isBreakMode) {
+        timeTotal = val * 60;
+        timeLeft = timeTotal;
+        updateDisplay();
+    }
+};
+
+
+// Timer Logic
+function toggleTimer() {
+    if (timerInterval) {
+        clearInterval(timerInterval);
+        timerInterval = null;
+        startBtn.innerHTML = '<i class="fa-solid fa-play"></i> Start';
     } else {
-        circle.style.transform = 'scale(2.5)';
-        label.innerText = "Inhale...";
+        startBtn.innerHTML = '<i class="fa-solid fa-pause"></i> Pause';
+        timerInterval = setInterval(() => {
+            if (timeLeft > 0) {
+                timeLeft--;
+                updateDisplay();
+            } else {
+                handleSwitchMode();
+            }
+        }, 1000);
     }
 }
 
-function closeBreathe() {
-    overlay.style.display = 'none';
-    clearInterval(breatheInterval);
+function handleSwitchMode() {
+    clearInterval(timerInterval);
+    timerInterval = null;
+    isBreakMode = !isBreakMode;
+    
+    // Set new totals based on sliders
+    timeTotal = isBreakMode ? breakSlider.value * 60 : sessionSlider.value * 60;
+    timeLeft = timeTotal;
+    
+    // Play Audio
+    new Audio(`/uploads/audio/${document.getElementById('audio-select').value}`).play();
+    
+    alert(isBreakMode ? "Break Time!" : "Back to Work!");
+    startBtn.innerHTML = '<i class="fa-solid fa-play"></i> Start';
+    updateDisplay();
 }
+
+startBtn.onclick = toggleTimer;
+document.getElementById('reset-btn').onclick = () => {
+    clearInterval(timerInterval);
+    timerInterval = null;
+    isBreakMode = false;
+    timeTotal = sessionSlider.value * 60;
+    timeLeft = timeTotal;
+    startBtn.innerHTML = '<i class="fa-solid fa-play"></i> Start';
+    updateDisplay();
+};
+
+function updateTotal() {
+    const totalMinutes = sessionSlider.value * breakSlider.value;
+    const timeValue = sessionSlider.value;
+    const breakValue = breakSlider.value;
+    
+    const hours = Math.floor(totalMinutes / 60);
+    const mins = totalMinutes % 60;
+
+    // Formats output based on whether there are hours or just minutes
+    if (hours > 0) {
+        totalDisplay.textContent = `${hours}h ${mins}m`;
+    } else {
+        totalDisplay.textContent = `${mins}m`;
+    }
+    breaks.textContent = breakValue;
+    time.textContent = `${timeValue}m`;
+}
+
+// Update whenever a slider is moved
+sessionSlider.addEventListener('input', updateTotal);
+breakSlider.addEventListener('input', updateTotal);
+
+// Start initialized
+updateDisplay();

@@ -1,21 +1,30 @@
 <!DOCTYPE html>
 <html lang="en" style="background-color: rgb(7, 40, 7);">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>School Toolkit</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="todo.css">
-    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Rubik:wght@700;900&display=swap" rel="stylesheet">
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>School Toolkit</title>
+        
+        <!-- Preconnect to speed up font delivery -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+        <!-- Combined and Minified CSS is best -->
+        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="todo.css" media="print" onload="this.media='all'">
+        
+        <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Rubik:wght@700;900&display=swap" rel="stylesheet">
+    </head>
+    
 <div class="background-image" id="background-img"></div>
 <body>
     <header class="toolbar glass">
         <div class="toolbar-end">
+            <button onclick="openNotes()" class="toolbar-btn"><i class="fa-solid fa-sticky-note"></i></button>
             <button class="toolbar-btn" id="calc"><i class="fa-solid fa-calculator"></i></button>
             <div class="timer-section">
                 <button class="toolbar-btn" id="timer"><i class="fa-solid fa-clock"></i></button>
-                <span>25:00 Remaining</span>
+                <span id="toolbar-timer-text">25:00 Remaining</span> <!-- Added ID here -->
             </div>
         </div>
         <div class="toolbar-end">
@@ -78,17 +87,6 @@
                     </div>
                 </div>
             </div>
-            <div class="card glass">
-                <h1>Notes</h1>
-                <div>
-                    <textarea class="text-box" name="content" rows="4" placeholder="Add a Note.."></textarea>
-                </div>
-                <div>
-                    <div id="goals">
-
-                    </div>
-                </div>
-            </div>
         </div>
         
     </main>
@@ -100,29 +98,80 @@
         <div id="calculator">
             <input id="display" readonly>
             <div id="keys">
+
+                <button onclick="appendToDisplay('(')" class="operator-btn">(</button>
+                <button onclick="appendToDisplay(')')" class="operator-btn">)</button>
+                <button onclick="appendToDisplay('^')" class="operator-btn">x²</button>
+                <button onclick="appendToDisplay('√(')" class="operator-btn">√</button>
+
+                <!--<button onclick="appendPi()" class="operator-btn">π</button>-->
+
+
                 <button onclick="appendToDisplay('+')" class="operator-btn">+</button>
                 <button onclick="appendToDisplay('7')">7</button>
                 <button onclick="appendToDisplay('8')">8</button>
                 <button onclick="appendToDisplay('9')">9</button>
+
                 <button onclick="appendToDisplay('-')" class="operator-btn">-</button>
                 <button onclick="appendToDisplay('4')">4</button>
                 <button onclick="appendToDisplay('5')">5</button>
                 <button onclick="appendToDisplay('6')">6</button>
+
                 <button onclick="appendToDisplay('*')" class="operator-btn">*</button>
                 <button onclick="appendToDisplay('1')">1</button>
                 <button onclick="appendToDisplay('2')">2</button>
                 <button onclick="appendToDisplay('3')">3</button>
+
                 <button onclick="appendToDisplay('/')" class="operator-btn">/</button>
-                <button onclick="appendToDisplay('0')">0</button>
                 <button onclick="appendToDisplay('.')">.</button>
-                <button onclick="calculate()">=</button>
+                <button onclick="appendToDisplay('0')">0</button>
+                <button onclick="appendAns()" class="operator-btn">Ans</button>
+                
                 <button onclick="clearDisplay()" class="operator-btn">C</button>
+                <button onclick="calculate()" style="background-color: rgb(0, 0, 100)">=</button>
+
             </div>
         </div>
     </div>
-    <div id="timer-modal" style="display: none;" class="modal-card">
+    <div id="timer-modal" class="modal-card" style="display: none;">
         <button class="drag-handle">⠿</button>
-        This is a timer
+        
+        <!-- Circular Timer -->
+        <div class="timer-container">
+            <svg class="timer-svg" viewBox="0 0 100 100">
+                <circle class="timer-path-elapsed" cx="50" cy="50" r="45"></circle>
+                <path id="timer-path-remaining" 
+                    pathLength="283" 
+                    stroke-dasharray="283" 
+                    class="timer-path-remaining"
+                    d="M 50, 50 m -45, 0 a 45,45 0 1,0 90,0 a 45,45 0 1,0 -90,0">
+                </path>
+            </svg>
+            <span id="timer-label">25:00</span>
+        </div>
+    
+        <!-- Controls -->
+        <div class="controls">
+            <button id="start-btn" class="timer-btn"><i class="fa-solid fa-play"></i> Start</button>
+            <button id="reset-btn" class="timer-btn"><i class="fa-solid fa-rotate-left"></i> Reset</button>
+        </div>
+        
+    
+        <!-- Settings Dropdown -->
+        <details class="settings-menu">
+            <summary>Settings</summary>
+            <div class="settings-content">
+                <label>Session:<span id="time">25 min</span><input type="range" id="session-slider" min="1" max="60" value="25"></label>
+                <label>Breaks:<span id="breaks">0</span><input type="range" id="break-slider" min="0" max="5" value="1"></label>
+                <div class="total-time-display">Total Focus Time: <span id="total-time">25</span> mins</div>
+                <label>Audio: 
+                    <select id="audio-select">
+                        <!-- Options populated by JS -->
+                        <option value="default.mp3">Coming Soon!</option>
+                    </select>
+                </label>
+            </div>
+        </details>
     </div>
     <div id="editModal" class="modal">
         <div class="modal-content">
@@ -146,12 +195,41 @@
             <input type="date" id="edit-task-dueDate">
             <button id="save-edit-btn" class="action-btn">Save Changes</button>
         </div>
-    </div>   
-    <script src="scripts/localfoarge.js"></script>
-    <script src="/scripts/calculator.js"></script>
-    <script src="scripts/script.js"></script>
-    <script src="scripts/todo.js"></script>
-    <script src="https://kit.fontawesome.com/de554a4fd4.js" crossorigin="anonymous"></script>
+    </div>
+    <div class="notes-modal glass notes-hide" id="notes-modal">
+        <div class="notes-toolbar">
+            <h2>Notes</h2>
+            <div>
+                <button class="toolbar-btn" onclick="closeNotes()">X</button>
+            </div>
+        </div>
+        <hr style="width: 100%; margin: 0;">
+        <div class="notes-main">
+            <div class="edit-area">
+                <div class="edit-toolbbar">
+
+                </div>
+                <div class="page">
+                    <textarea class="textarea-title" placeholder="Untitled Note" id="note-title"></textarea>
+                    <textarea class="textarea" placeholder="Type Here..." id="note-content"></textarea>
+                </div>
+            </div>
+            <div class="gap"></div>
+            <div class="browse-area">
+                <div class="search-filter-notes">
+                    <div class="search-notes" id="note-search"></div>
+                    <div class="filter-modal" id="note-filter"></div>
+                </div>
+                <div id="note-inject"></div>
+            </div>
+        </div>
+    </div> 
+    <script src="scripts/localfoarge.js" defer></script>
+    <script src="/scripts/calculator.js" defer></script>
+    <script src="scripts/script.js" defer></script>
+    <script src="scripts/todo.js" defer></script>
+    <script src="scripts/notes.js" defer></script>
+    <script src="https://kit.fontawesome.com/de554a4fd4.js" crossorigin="anonymous" defer></script>
     <script>
         const sfToggleBtn = document.getElementById('s-f-toggle');
         const sfSection = document.getElementById('s-f-section');
