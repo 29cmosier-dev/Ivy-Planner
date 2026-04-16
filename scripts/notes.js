@@ -26,6 +26,22 @@ async function saveNote() {
         return;
     } else if (titleValue === '' && contentValue !== '') {
         titleValue = 'Untitled Note';
+        if (!currentNoteId) {
+            currentNoteId = "note_" + Date.now(); 
+        }
+        const dataToSave = {
+        id: currentNoteId,
+        title: titleValue,
+        contentA: contentValue,
+        date: new Date().toLocaleString()
+        };
+    
+        try {
+            await localforage.setItem(currentNoteId, dataToSave);
+            console.log("Saved uniquely at " + dataToSave.date);
+        } catch (err) {
+            console.error("Save failed:", err);
+        }
     } else if (titleValue !== '' && contentValue === '') {
         return;
     } else {
@@ -53,7 +69,7 @@ setInterval(saveNote, 5000);
 
 async function loadNotes() {
     const allKeys = await localforage.keys();
-
+    if (allKeys.length === 0) return;
     noteInject.innerHTML = "";
 
     for (const key of allKeys) {
@@ -99,8 +115,8 @@ async function deleteNote(event, key) { // Added 'event' here
     }
 }
 
-
 function startNewNote() {
+    saveNote();
     currentNoteId = null; // Reset the ID
     noteTitle.value = '';
     noteContent.value = '';
