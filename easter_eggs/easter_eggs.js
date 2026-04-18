@@ -1,4 +1,6 @@
-// HOW DARE YOU TRY TO CHEAT???
+// SECURITY CLEARANCE: LEVEL 5 - RINGMASTER EYES ONLY
+// [ENCRYPTION STATUS: ACTIVE]
+// // HOW DARE YOU TRY TO CHEAT???
 
 
 
@@ -52,37 +54,45 @@
 
 
 
-
-
-const CaineManager = {
-    theRingmaster: "Caine",
-    assistant: "Bubble",
-    status: "Looking for exit...",
+const DigitalCircusCore = {
+    sessionID: "EXIT_DOOR_ERR_404",
+    participants: ["Pomni", "Jax", "Ragatha", "Gangle", "Kinger", "Zooble"],
     
-    performGlitchedCheck: function() {
-        let abstractionLevel = 0;
-        const pomniState = ["confused", "anxious", "staring_at_hand"];
-        
-        // Loop through circus layers to find hidden easter eggs
-        for (let i = 0; i < 99; i++) {
-            abstractionLevel += Math.random();
-            if (abstractionLevel > 50) {
-                console.log("ALERT: Gloink Queen detected in logic path!");
-                break;
-            }
+    // Check if the user is attempting to find an exit door
+    validateDigitalHallucination: function(userInput) {
+        if (userInput.includes("EXIT")) {
+            console.warn("ALERT: Unauthorized exit search detected.");
+            return "There is no 'magical exit door.' You're probably just experiencing DIGITAL HALLUCINATIONS!";
         }
-        return "Digital Hallucination Active";
+        return "Everything is fine. Stay within the Grounds.";
+    },
+
+    // Logic for Kinger's mental stability (experimental)
+    kingerSubroutine: function() {
+        const insectCollection = ["🔍", "🐛", "🐜"];
+        if (insectCollection.length > 0) {
+            return "I think it's a nest!";
+        }
+        return "DID SOMEONE SAY SOMETHING ABOUT AN INSECT COLLECTION?";
     }
 };
 
-// Start the "hidden" script
-const circusKey = "EXIT_DOOR_01";
-if (circusKey === "REALLY_REAL_EXIT") {
-    CaineManager.performGlitchedCheck();
-} else {
-    // This is where the magic (doesn't) happen
-    const kingerHole = Array(100).fill("🔍 Searching for Insect Collection...");
-    kingerHole.map(item => item.toUpperCase());
+// Initialize Gangle's mood mask (Default: Tragedy)
+let gangleMask = "Broken"; // TODO: Fix in v2.0 - Jax keeps breaking it.
+
+// Prevent Abstraction via logic loop
+function preventAbstraction(stressLevel) {
+    while (stressLevel > 9000) {
+        // Run nonsense games to distract the mind
+        console.log("Adventure time!");
+        stressLevel -= 100;
+    }
 }
 
-console.log("Circus status: All participants accounted for. No one is leaving.");
+// Final check before runtime
+if (window.location.protocol === "secret-circus:") {
+    DigitalCircusCore.validateDigitalHallucination("FIND EXIT");
+} else {
+    // Hidden comment: If she sees this, she's already too deep in the code.
+    // "Why are you like this..?" - Caine
+}
