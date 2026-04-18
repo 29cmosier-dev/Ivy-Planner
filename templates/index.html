@@ -10,8 +10,8 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     
         <!-- Combined and Minified CSS is best -->
-        <link rel="stylesheet" href="style.css">
-        <link rel="stylesheet" href="todo.css" media="print" onload="this.media='all'">
+        <link rel="stylesheet" href="../style.css">
+        <link rel="stylesheet" href="../todo.css" media="print" onload="this.media='all'">
         
         <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Rubik:wght@700;900&display=swap" rel="stylesheet">
     </head>
@@ -28,7 +28,7 @@
             </div>
         </div>
         <div class="toolbar-end">
-            <button class="toolbar-btn"><i class="fa-solid fa-gear"></i></button>
+            <button class="toolbar-btn" onclick="openSettings()"><i class="fa-solid fa-gear"></i></button>
         </div>
     </header>
     <main>
@@ -79,11 +79,11 @@
             <div class="card glass">
                 <h1>Goals</h1>
                 <div>
-                    <input type="text" class="text-box" placeholder="Add a Goal for today, eg, Complete 3 assignemets...">
+                    <input type="text" class="text-box" placeholder="Add a Goal for today, eg, Complete 3 assignemets..." id="goals-input">
                 </div>
                 <div>
-                    <div id="goals">
-
+                    <div id="goals-inject" style="padding: 1rem; text-align: center;">
+                        Coming Soon!
                     </div>
                 </div>
             </div>
@@ -206,8 +206,8 @@
         <hr style="width: 100%; margin: 0;">
         <div class="notes-main">
             <div class="edit-area">
-                <div class="edit-toolbbar">
-                    
+                <div class="edit-toolbbar" style="padding: 1rem; text-align: center;">
+                    Note Customization Coming soon! Please wait for the next version!
                 </div>
                 <div class="page">
                     <textarea class="textarea-title" placeholder="Untitled Note" id="note-title"></textarea>
@@ -226,27 +226,37 @@
                 </div>
             </div>
         </div>
-    </div> 
-    <script src="scripts/localfoarge.js" defer></script>
-    <script src="/scripts/calculator.js" defer></script>
-    <script src="scripts/script.js" defer></script>
-    <script src="scripts/todo.js" defer></script>
-    <script src="scripts/notes.js" defer></script>
+    </div>
+    <div id="settings-modal" class="notes-modal glass notes-hide">
+        <div class="notes-toolbar">
+            <h2>Settings</h2>
+            <div>
+                <button class="toolbar-btn" onclick="closeSettings()">X</button>
+            </div>
+        </div>
+        <hr style="width: 100%; margin: 0;">
+        <div class="notes-main settings-main">
+            <div style="flex-grow: 1" class="customization-options">
+                <form>
+                    <label>Accent Color - <span id="accent-color-display">#000000</span></label>
+                    <input type="color" id="accent-color-picker">
+                </form>
+                <form action="/upload" method="POST" enctype="multipart/form-data"
+                    <input type="file" id="background-img" name="background_image">
+                    <button type="submit">Upload</button>
+                </form>
+            </div>
+            <div>
+                <hr>
+                <p class="settings-footer">V1.0.0 - Made by Cameron Mosier</p>
+            </div>
+        </div>
+    </div>
+    <script src="../scripts/localfoarge.js" defer></script>
+    <script src="../scripts/script.js" defer></script>
+    <script src="../scripts/todo.js" defer></script>
+    <script src="../scripts/notes.js" defer></script>
+    <script src="../scripts/settings.js" defer></script>
     <script src="https://kit.fontawesome.com/de554a4fd4.js" crossorigin="anonymous" defer></script>
-    <script>
-        const sfToggleBtn = document.getElementById('s-f-toggle');
-        const sfSection = document.getElementById('s-f-section');
-
-        sfSection.style.display = 'none';
-
-        sfToggleBtn.addEventListener('click', () => {
-        if (sfSection.style.display === 'none') {
-            sfSection.style.display = 'flex';
-        } else {
-            sfSection.style.display = 'none';
-        }
-        });
-
-    </script>
 </body>
 </html>

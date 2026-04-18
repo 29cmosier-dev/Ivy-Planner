@@ -73,7 +73,7 @@ h3 {
 /* ANCHOR RE-USED STYLES */
 
 .glass {
-    background-color: var(--glass-light);
+    background-color: var(--glass-light);/* #26262650 */
     backdrop-filter: blur(3px);
     -webkit-backdrop-filter: blur(3px);
     box-shadow: 0 0 10px var(--glass-light);
@@ -439,7 +439,7 @@ select {
 .edit-toolbbar {
     min-height: 3rem;
     width: 100%;
-    background-color: red;
+    background-color: var(--transparent);
     border-top-left-radius: 12px;
     border-top-right-radius: 12px;
 }
@@ -482,3 +482,45 @@ select {
     .right-col, .left-col { width: 100%;}
 }
 
+.settings-footer {
+    color: var(--main-text-white);
+}
+
+input[type="color"] {
+    width: 60px;
+    height: 60px;
+    border: none;
+    cursor: pointer;
+    background: var(--transparent);
+  }
+  
+  /* For Chrome/Safari */
+  input[type="color"]::-webkit-color-swatch-wrapper {
+    padding: 0;
+  }
+  input[type="color"]::-webkit-color-swatch {
+    border: 2px solid #333;
+    border-radius: 12px;
+  }
+  
+  /* For Firefox */
+  input[type="color"]::-moz-color-swatch {
+    border: 2px solid #333;
+    border-radius: 12px;
+  }
+
+  .settings-main {
+    display: flex;
+    flex-direction: column;
+  }
+
+.customization-options form {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    
+}
+
+.customization-options form label {
+    font-size: 2em;
+}
