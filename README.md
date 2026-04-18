@@ -13,6 +13,6 @@ Clone the Project:
 - Click the URL tab and paste the link to my GitHub project.
 - Choose where you want to save it on your computer and click Clone.
 # 3. Make it a Desktop App
-To open the planner faster, Right-click the Launch Planner.bat file and select Send to > Desktop (create shortcut). Then, on your desktop, you can right-click it, and change the name to whatever you want, and, if you want, look up how to change the icon to the logo you designed!
+To open the planner faster, Right-click the Launch Planner.bat file and select Send to > Desktop (create shortcut). Then, on your desktop, you can right-click it, and change the name to whatever you want, and, if you want, look up how to change the icon to the logo you designed! 
 
 

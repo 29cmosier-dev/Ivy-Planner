@@ -38,5 +38,5 @@ def open_browser():
 
 if __name__ == '__main__':
     Timer(1, open_browser).start() # Opens the browser 1 second after starting
-    app.run(port=8000)
+    app.run(port=8000) 
 

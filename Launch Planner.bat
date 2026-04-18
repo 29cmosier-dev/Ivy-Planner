@@ -7,3 +7,4 @@ python -m pip install flask werkzeug --quiet
 
 start /b pythonw app.py
 exit
+

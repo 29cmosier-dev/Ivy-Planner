@@ -18,4 +18,4 @@ function closeSettings() {
 accentColorPicker.oninput = function() {
     accentColorDisplay.innerHTML = accentColorPicker.value;
     accentColorDisplay.style.color = accentColorPicker.value;
-}
+} 
