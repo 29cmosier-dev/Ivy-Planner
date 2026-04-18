@@ -1,4 +1,4 @@
-# 🛠 One-Time Setup Instructions
+# One-Time Setup Instructions
 Before you can run the planner, you need to set up two tools on your computer. You only have to do this once!
 # 1. Install Python (The Engine)
 - Download: Go to python.org and click the yellow Download Python button.
@@ -11,5 +11,7 @@ Clone the Project:
 - Go to File > Clone Repository.
 - Click the URL tab and paste the link to my GitHub project.
 - Choose where you want to save it on your computer and click Clone.
+# 3. Make it a Desktop App
+To open the planner faster, Right-click the Launch Planner.bat file and select Send to > Desktop (create shortcut). You can now move that shortcut to your desktop and rename it to "My Planner" for easy access!
 
 
