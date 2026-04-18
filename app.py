@@ -33,10 +33,10 @@ def upload_file():
         return 'Image saved to uploads/images!'
     
 def open_browser():
-      webbrowser.open_new('http://127.0.0.1:5500/templates')
+      webbrowser.open_new('http://127.0.0.1:8000/templates')
 
 
 if __name__ == '__main__':
     Timer(1, open_browser).start() # Opens the browser 1 second after starting
-    app.run(port=5000)
+    app.run(port=8000)
 
