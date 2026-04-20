@@ -16,18 +16,29 @@ window.addEventListener("load", () => {
 });
 
 // --- 2. Toggle and Move to Cursor ---
-function toggleModal(modal, event) {
-    if (modal.style.display === "block") {
-        modal.style.display = "none";
+function toggleModal(modal, event, btn) {
+    // Check if this specific modal is already open
+    const isOpen = modal.style.display === "block";
+  
+    if (isOpen) {
+      modal.style.display = "none";
+      // Reset icon to its original state (e.g., bars or specific tool icon)
+      const originalIcon = btn.id === "calc" ? "fa-calculator" : "fa-clock";
+      btn.innerHTML = `<i class="fa-solid ${originalIcon}"></i>`;
     } else {
-        modal.style.display = "block";
-        modal.style.left = `${event.clientX}px`;
-        modal.style.top = `${event.clientY}px`;
+      modal.style.display = "block";
+      modal.style.left = `${event.clientX}px`;
+      modal.style.top = `${event.clientY}px`;
+      // Change to 'X' icon when open
+      btn.innerHTML = `<i class="fa-solid fa-x"></i>`;
     }
-}
-
-calcBtn.addEventListener("click", (e) => toggleModal(calcModal, e));
-timerBtn.addEventListener("click", (e) => toggleModal(timerModal, e));
+  }
+  
+  // Event Listeners
+  calcBtn.addEventListener("click", (e) => toggleModal(calcModal, e, calcBtn));
+  timerBtn.addEventListener("click", (e) => toggleModal(timerModal, e, timerBtn));
+  
+  
 
 // --- 3. Draggable Logic with Saving ---
 const dragButtons = document.getElementsByClassName("drag-handle");

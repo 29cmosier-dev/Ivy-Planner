@@ -132,6 +132,7 @@ h3 {
     user-select: none;
     background: var(--accent-color-transparent);
     margin: 1.5rem;
+    z-index: 999;
 }
 
 .drag-handle {
@@ -315,6 +316,7 @@ select {
     transform: translate(0, 0); 
     transition: transform 0.3s ease-out, opacity 0.3s ease-out;
     opacity: 1;
+    z-index: 100;
 }
 
 .notes-main {
