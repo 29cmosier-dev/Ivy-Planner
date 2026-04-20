@@ -93,6 +93,5 @@ function preventAbstraction(stressLevel) {
 if (window.location.protocol === "secret-circus:") {
     DigitalCircusCore.validateDigitalHallucination("FIND EXIT");
 } else {
-    // Hidden comment: If she sees this, she's already too deep in the code.
     // "Why are you like this..?" - Caine
 }
