@@ -11,7 +11,7 @@ echo   SYNCING WITH GITHUB...
 echo ========================================
 
 :: 1. Pull the latest code
-git pull origin main --no-rebase
+git pull origin main --quiet --no-rebase
 
 :: 2. KILL the old python process if it's running
 :: This ensures the NEW app.py code is loaded into RAM
