@@ -4,12 +4,8 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>School Toolkit</title>
-        
-        <!-- Preconnect to speed up font delivery -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    
-        <!-- Combined and Minified CSS is best -->
         <link rel="stylesheet" href="../style.css">
         <link rel="stylesheet" href="../todo.css" media="print" onload="this.media='all'">
         
@@ -24,7 +20,7 @@
             <button class="toolbar-btn" id="calc"><i class="fa-solid fa-calculator"></i></button>
             <div class="timer-section">
                 <button class="toolbar-btn" id="timer"><i class="fa-solid fa-clock"></i></button>
-                <span id="toolbar-timer-text">25:00 Remaining</span> <!-- Added ID here -->
+                <span id="toolbar-timer-text">25:00 Remaining</span>
             </div>
         </div>
         <div class="toolbar-end">
@@ -90,167 +86,211 @@
         </div>
         
     </main>
-    <div id="calc-modal" style="display: none;" class="modal-card">
-        <div class="modal-title-drag">
-            <h3>Calculator</h3>
+    <div>
+        <div id="calc-modal" style="display: none;" class="modal-card">
+            <div class="modal-title-drag">
+                <h3>Calculator</h3>
+                <button class="drag-handle">⠿</button>
+            </div>
+            <div id="calculator">
+                <input id="display" readonly>
+                <div id="keys">
+
+                    <button onclick="appendToDisplay('(')" class="operator-btn">(</button>
+                    <button onclick="appendToDisplay(')')" class="operator-btn">)</button>
+                    <button onclick="appendToDisplay('^')" class="operator-btn">x²</button>
+                    <button onclick="appendToDisplay('√(')" class="operator-btn">√</button>
+
+                    <!--<button onclick="appendPi()" class="operator-btn">π</button>-->
+
+
+                    <button onclick="appendToDisplay('+')" class="operator-btn">+</button>
+                    <button onclick="appendToDisplay('7')">7</button>
+                    <button onclick="appendToDisplay('8')">8</button>
+                    <button onclick="appendToDisplay('9')">9</button>
+
+                    <button onclick="appendToDisplay('-')" class="operator-btn">-</button>
+                    <button onclick="appendToDisplay('4')">4</button>
+                    <button onclick="appendToDisplay('5')">5</button>
+                    <button onclick="appendToDisplay('6')">6</button>
+
+                    <button onclick="appendToDisplay('*')" class="operator-btn">*</button>
+                    <button onclick="appendToDisplay('1')">1</button>
+                    <button onclick="appendToDisplay('2')">2</button>
+                    <button onclick="appendToDisplay('3')">3</button>
+
+                    <button onclick="appendToDisplay('/')" class="operator-btn">/</button>
+                    <button onclick="appendToDisplay('.')">.</button>
+                    <button onclick="appendToDisplay('0')">0</button>
+                    <button onclick="appendAns()" class="operator-btn">Ans</button>
+                    
+                    <button onclick="clearDisplay()" class="operator-btn">C</button>
+                    <button onclick="calculate()" style="background-color: rgb(0, 0, 100)">=</button>
+
+                </div>
+            </div>
+        </div>
+        <div id="timer-modal" class="modal-card" style="display: none;">
             <button class="drag-handle">⠿</button>
-        </div>
-        <div id="calculator">
-            <input id="display" readonly>
-            <div id="keys">
-
-                <button onclick="appendToDisplay('(')" class="operator-btn">(</button>
-                <button onclick="appendToDisplay(')')" class="operator-btn">)</button>
-                <button onclick="appendToDisplay('^')" class="operator-btn">x²</button>
-                <button onclick="appendToDisplay('√(')" class="operator-btn">√</button>
-
-                <!--<button onclick="appendPi()" class="operator-btn">π</button>-->
-
-
-                <button onclick="appendToDisplay('+')" class="operator-btn">+</button>
-                <button onclick="appendToDisplay('7')">7</button>
-                <button onclick="appendToDisplay('8')">8</button>
-                <button onclick="appendToDisplay('9')">9</button>
-
-                <button onclick="appendToDisplay('-')" class="operator-btn">-</button>
-                <button onclick="appendToDisplay('4')">4</button>
-                <button onclick="appendToDisplay('5')">5</button>
-                <button onclick="appendToDisplay('6')">6</button>
-
-                <button onclick="appendToDisplay('*')" class="operator-btn">*</button>
-                <button onclick="appendToDisplay('1')">1</button>
-                <button onclick="appendToDisplay('2')">2</button>
-                <button onclick="appendToDisplay('3')">3</button>
-
-                <button onclick="appendToDisplay('/')" class="operator-btn">/</button>
-                <button onclick="appendToDisplay('.')">.</button>
-                <button onclick="appendToDisplay('0')">0</button>
-                <button onclick="appendAns()" class="operator-btn">Ans</button>
-                
-                <button onclick="clearDisplay()" class="operator-btn">C</button>
-                <button onclick="calculate()" style="background-color: rgb(0, 0, 100)">=</button>
-
+            
+            <!-- Circular Timer -->
+            <div class="timer-container">
+                <svg class="timer-svg" viewBox="0 0 100 100">
+                    <circle class="timer-path-elapsed" cx="50" cy="50" r="45"></circle>
+                    <path id="timer-path-remaining" 
+                        pathLength="283" 
+                        stroke-dasharray="283" 
+                        class="timer-path-remaining"
+                        d="M 50, 50 m -45, 0 a 45,45 0 1,0 90,0 a 45,45 0 1,0 -90,0">
+                    </path>
+                </svg>
+                <span id="timer-label">25:00</span>
             </div>
-        </div>
-    </div>
-    <div id="timer-modal" class="modal-card" style="display: none;">
-        <button class="drag-handle">⠿</button>
         
-        <!-- Circular Timer -->
-        <div class="timer-container">
-            <svg class="timer-svg" viewBox="0 0 100 100">
-                <circle class="timer-path-elapsed" cx="50" cy="50" r="45"></circle>
-                <path id="timer-path-remaining" 
-                    pathLength="283" 
-                    stroke-dasharray="283" 
-                    class="timer-path-remaining"
-                    d="M 50, 50 m -45, 0 a 45,45 0 1,0 90,0 a 45,45 0 1,0 -90,0">
-                </path>
-            </svg>
-            <span id="timer-label">25:00</span>
-        </div>
-    
-        <!-- Controls -->
-        <div class="controls">
-            <button id="start-btn" class="timer-btn"><i class="fa-solid fa-play"></i> Start</button>
-            <button id="reset-btn" class="timer-btn"><i class="fa-solid fa-rotate-left"></i> Reset</button>
-        </div>
+            <!-- Controls -->
+            <div class="controls">
+                <button id="start-btn" class="timer-btn"><i class="fa-solid fa-play"></i> Start</button>
+                <button id="reset-btn" class="timer-btn"><i class="fa-solid fa-rotate-left"></i> Reset</button>
+            </div>
+            
         
-    
-        <!-- Settings Dropdown -->
-        <details class="settings-menu">
-            <summary>Settings</summary>
-            <div class="settings-content">
-                <label>Session:<span id="time">25 min</span><input type="range" id="session-slider" min="1" max="60" value="25"></label>
-                <label>Breaks:<span id="breaks">0</span><input type="range" id="break-slider" min="0" max="5" value="1"></label>
-                <div class="total-time-display">Total Focus Time: <span id="total-time">25</span> mins</div>
-                <label>Audio: 
-                    <select id="audio-select">
-                        <!-- Options populated by JS -->
-                        <option value="default.mp3">Coming Soon!</option>
-                    </select>
-                </label>
-            </div>
-        </details>
-    </div>
-    <div id="editModal" class="modal">
-        <div class="modal-content">
-            <span class="close-btn">&times;</span>
-            <h2 class="modal-title">Edit Task Details:</h2>
-            <label for="edit-task-text">Edit Task:</label>
-            <input type="text" id="edit-task-text" placeholder="Task description">
-            <label for="edit-task-priority">Priority:</label>
-
-            <select id="edit-task-priority">
-                <option value="minimal">Minimal</option>
-                <option value="normal">Normal</option>
-                <option value="critical">Critical</option>
-            </select>
-
-            <label for="edit-task-category">Category:</label>
-
-            <input id="edit-task-category">
-
-            <label for="edit-task-dueDate">Due Date:</label>
-            <input type="date" id="edit-task-dueDate">
-            <button id="save-edit-btn" class="action-btn">Save Changes</button>
+            <!-- Settings Dropdown -->
+            <details class="settings-menu">
+                <summary>Settings</summary>
+                <div class="settings-content">
+                    <label>Session:<span id="time">25 min</span><input type="range" id="session-slider" min="1" max="60" value="25"></label>
+                    <label>Breaks:<span id="breaks">0</span><input type="range" id="break-slider" min="0" max="5" value="1"></label>
+                    <div class="total-time-display">Total Focus Time: <span id="total-time">25</span> mins</div>
+                    <label>Audio: 
+                        <select id="audio-select">
+                            <!-- Options populated by JS -->
+                            <option value="default.mp3">Coming Soon!</option>
+                        </select>
+                    </label>
+                </div>
+            </details>
         </div>
-    </div>
-    <div class="notes-modal glass notes-hide" id="notes-modal">
-        <div class="notes-toolbar">
-            <h2>Notes</h2>
-            <div>
-                <button class="toolbar-btn" onclick="closeNotes()">X</button>
+        <div id="editModal" class="modal">
+            <div class="modal-content">
+                <span class="close-btn">&times;</span>
+                <h2 class="modal-title">Edit Task Details:</h2>
+                <label for="edit-task-text">Edit Task:</label>
+                <input type="text" id="edit-task-text" placeholder="Task description">
+                <label for="edit-task-priority">Priority:</label>
+
+                <select id="edit-task-priority">
+                    <option value="minimal">Minimal</option>
+                    <option value="normal">Normal</option>
+                    <option value="critical">Critical</option>
+                </select>
+
+                <label for="edit-task-category">Category:</label>
+
+                <input id="edit-task-category">
+
+                <label for="edit-task-dueDate">Due Date:</label>
+                <input type="date" id="edit-task-dueDate">
+                <button id="save-edit-btn" class="action-btn">Save Changes</button>
             </div>
         </div>
-        <hr style="width: 100%; margin: 0;">
-        <div class="notes-main">
-            <div class="edit-area">
-                <div class="edit-toolbbar" style="padding: 1rem; text-align: center;">
-                    Note Customization Coming soon! Please wait for the next version!
-                </div>
-                <div class="page">
-                    <textarea class="textarea-title" placeholder="Untitled Note" id="note-title"></textarea>
-                    <textarea class="textarea" placeholder="Type Here..." id="note-content"></textarea>
-                </div>
-            </div>
-            <div class="gap"></div>
-            <div class="browse-area card">
-                <div class="search-filter-notes">
-                    <div class="search-notes" id="note-search"></div>
-                    <div class="filter-modal" id="note-filter"></div>
-                </div>
-                <div id="note-inject">No Notes Yet! Create one now!</div>
+        <div class="notes-modal glass notes-hide" id="notes-modal">
+            <div class="notes-toolbar">
+                <h2>Notes</h2>
                 <div>
-                    <button onclick="startNewNote()">+</button>
+                    <button class="toolbar-btn" onclick="closeNotes()">X</button>
+                </div>
+            </div>
+            <hr style="width: 100%; margin: 0;">
+            <div class="notes-main">
+                <div class="edit-area">
+                    <div class="edit-toolbbar" style="padding: 1rem; text-align: center;">
+                        Note Customization Coming soon! Please wait for the next version!
+                    </div>
+                    <div class="page">
+                        <textarea class="textarea-title" placeholder="Untitled Note" id="note-title"></textarea>
+                        <textarea class="textarea" placeholder="Type Here..." id="note-content"></textarea>
+                    </div>
+                </div>
+                <div class="gap"></div>
+                <div class="browse-area card">
+                    <div class="search-filter-notes">
+                        <div class="search-notes" id="note-search"></div>
+                        <div class="filter-modal" id="note-filter"></div>
+                    </div>
+                    <div id="note-inject">No Notes Yet! Create one now!</div>
+                    <div>
+                        <button onclick="startNewNote()">+</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div id="settings-modal" class="notes-modal glass notes-hide">
-        <div class="notes-toolbar">
-            <h2>Settings</h2>
-            <div>
-                <button class="toolbar-btn" onclick="closeSettings()">X</button>
+        <div id="settings-modal" class="notes-modal glass notes-hide">
+            <div class="notes-toolbar">
+                <h2>Settings</h2>
+                <div>
+                    <button class="toolbar-btn" onclick="closeSettings()">X</button>
+                </div>
+            </div>
+            <hr style="width: 100%; margin: 0;"> 
+            <div class="notes-main settings-main">
+                <div style="flex-grow: 1" class="customization-options">
+                    <form>
+                        <label>Accent Color - <span id="accent-color-display">#000000</span></label>
+                        <input type="color" id="accent-color-picker">
+                    </form>
+                    <form action="/upload" method="POST" enctype="multipart/form-data"
+                        <input type="file" id="background-img" name="background_image">
+                        <button type="submit">Upload</button>
+                    </form>
+                </div>
+                <div>
+                    <hr>
+                    <p class="settings-footer">V1.0.0 - Made by Cameron Mosier</p>
+                </div>
             </div>
         </div>
-        <hr style="width: 100%; margin: 0;"> 
-        <div class="notes-main settings-main">
-            <div style="flex-grow: 1" class="customization-options">
-                <form>
-                    <label>Accent Color - <span id="accent-color-display">#000000</span></label>
-                    <input type="color" id="accent-color-picker">
-                </form>
-                <form action="/upload" method="POST" enctype="multipart/form-data"
-                    <input type="file" id="background-img" name="background_image">
-                    <button type="submit">Upload</button>
-                </form>
-            </div>
-            <div>
-                <hr>
-                <p class="settings-footer">V1.0.0 - Made by Cameron Mosier</p>
-            </div>
+        <div id="update-toast">
+            <div style="font-weight: bold; margin-bottom: 5px;">🚀 Update Available!</div>
+            <div style="font-size: 0.9em; opacity: 0.8;">New changes were pulled from GitHub.</div>
+            <button onclick="applyUpdate()">Update & Refresh</button>
         </div>
+    
+        <script>
+            let currentVersion = null;
+    
+            async function checkForUpdates() {
+                try {
+                    const response = await fetch('/get-version');
+                    const data = await response.json();
+    
+                    // On first load, just store the version
+                    if (currentVersion === null) {
+                        currentVersion = data.version;
+                        console.log("Initial version set:", currentVersion);
+                        return;
+                    }
+    
+                    // If version changes, show the toast
+                    if (data.version !== currentVersion) {
+                        console.log("New version detected!");
+                        document.getElementById('update-toast').style.display = 'block';
+                    }
+                } catch (e) {
+                    console.error("Update check failed", e);
+                }
+            }
+    
+            function applyUpdate() {
+                // Reload the page and bypass cache
+                window.location.reload(true);
+            }
+    
+            // Check for version changes every 10 minutes (600,000 ms)
+            setInterval(checkForUpdates, 600000);
+    
+            // Run once immediately on load
+            checkForUpdates();
+        </script>
     </div>
     <script src="../scripts/localfoarge.js" defer></script>
     <script src="../scripts/script.js" defer></script>

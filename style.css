@@ -526,3 +526,30 @@ input[type="color"] {
 .customization-options form label {
     font-size: 2em;
 }
+
+/* ANCHOR - Toast Popup */
+#update-toast {
+    display: none; 
+    position: fixed; 
+    bottom: 20px; 
+    right: 20px; 
+    background: #222; 
+    color: white; 
+    padding: 20px; 
+    border-radius: 10px; 
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5); 
+    z-index: 9999; 
+    border-left: 5px solid #007bff;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+#update-toast button {
+    background: #007bff; 
+    color: white; 
+    border: none; 
+    padding: 8px 15px; 
+    border-radius: 5px; 
+    cursor: pointer; 
+    margin-top: 10px;
+    font-weight: bold;
+}
+#update-toast button:hover { background: #0056b3; }
