@@ -163,6 +163,7 @@ function handleSwitchMode() {
     new Audio(`/uploads/audio/${document.getElementById('audio-select').value}`).play();
     
     alert(isBreakMode ? "Break Time!" : "Back to Work!");
+    document.title(isBreakMode ? "Break Time!" : "Back to Work!");
     startBtn.innerHTML = '<i class="fa-solid fa-play"></i> Start';
     updateDisplay();
 }
